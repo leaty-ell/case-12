@@ -18,7 +18,17 @@ def find_files_windows(
         path: str,
         case_sensitive: bool = False
 ) -> List[str]:
-    """Поиск файлов по шаблону с поддержкой wildcards (*, ?)."""
+    """
+    Search for files using wildcard patterns (*, ?).
+    
+    Args:
+        pattern: Wildcard pattern to match filenames
+        path: Directory path to start search from
+        case_sensitive: Whether the search should be case-sensitive
+    
+    Returns:
+        List of full paths to matching files
+    """
     results = []
 
     def search_recursive(current_path: str, depth: int = 0) -> None:
@@ -70,7 +80,16 @@ def find_files_windows(
 
 
 def find_by_windows_extension(extensions: List[str], path: str) -> List[str]:
-    """Поиск файлов по списку расширений Windows."""
+    """
+    Search for files by their extensions.
+    
+    Args:
+        extensions: List of file extensions (with or without leading dot)
+        path: Directory path to start search from
+    
+    Returns:
+        List of full paths to matching files
+    """
     results = []
 
     normalized_extensions = []
@@ -120,7 +139,16 @@ def find_large_files_windows(
         min_size_mb: float,
         path: str
 ) -> List[Dict[str, Any]]:
-    """Поиск файлов, размер которых превышает указанный минимум."""
+    """
+    Find files larger than the specified minimum size.
+    
+    Args:
+        min_size_mb: Minimum file size in megabytes
+        path: Directory path to start search from
+    
+    Returns:
+        List of dictionaries containing file information (path, name, size, etc.)
+    """
     results = []
     min_size_bytes = min_size_mb * 1024 * 1024
 
@@ -176,7 +204,15 @@ def find_large_files_windows(
 
 
 def find_windows_system_files(path: str) -> List[str]:
-    """Поиск системных файлов Windows в указанном пути."""
+    """
+    Search for Windows system files in the specified path.
+    
+    Args:
+        path: Directory path to start search from
+    
+    Returns:
+        List of full paths to system files
+    """
     results = []
 
     system_extensions = {'.exe', '.dll', '.sys', '.drv', '.ocx', '.cpl', '.msi', '.msu'}
@@ -234,7 +270,15 @@ def find_windows_system_files(path: str) -> List[str]:
 
 
 def search_menu_handler(current_path: str) -> bool:
-    """Интерактивное меню поиска с различными опциями."""
+    """
+    Interactive search menu with various options.
+    
+    Args:
+        current_path: Current working directory path
+    
+    Returns:
+        Boolean indicating if the program should continue
+    """
     while True:
         print(f"\n{'=' * 60}")
         print(ru.SEARCH_MENU_TITLE)
@@ -340,7 +384,13 @@ def search_menu_handler(current_path: str) -> bool:
 
 
 def format_windows_search_results(results: List, search_type: str) -> None:
-    """Форматированный вывод результатов поиска в зависимости от типа."""
+    """
+    Format and display search results based on search type.
+    
+    Args:
+        results: List of search results (file paths or file info dictionaries)
+        search_type: Type of search ("pattern", "extension", "large", or "system")
+    """
     if not results:
         print(ru.NO_RESULTS)
         return
@@ -427,7 +477,18 @@ def recursive_content_search(
         file_extensions: List[str] = None,
         content_cache: Dict[str, str] = None
 ) -> List[Tuple[str, List[int]]]:
-    """Рекурсивный поиск текста в содержимом файлов с кэшированием."""
+    """
+    Recursively search for text content within files.
+    
+    Args:
+        root_path: Directory path to start search from
+        search_pattern: Text pattern to search for
+        file_extensions: Optional list of file extensions to filter by
+        content_cache: Optional cache of file contents
+    
+    Returns:
+        List of tuples containing file path and line numbers where pattern was found
+    """
     results = []
     if content_cache is None:
         content_cache = {}
@@ -509,7 +570,18 @@ def smart_recursive_search(
         search_context: Dict[str, Any] = None,
         relevance_threshold: float = 0.5
 ) -> List[Tuple[str, float]]:
-    """Умный поиск с оценкой релевантности на основе TF."""
+    """
+    Intelligent search with relevance scoring based on TF.
+    
+    Args:
+        root_path: Directory path to start search from
+        query: Search query string
+        search_context: Optional context dictionary for search
+        relevance_threshold: Minimum relevance score (0.0 to 1.0)
+    
+    Returns:
+        List of tuples containing file path and relevance score
+    """
     results = []
 
     query_terms = query.lower().split()
@@ -576,7 +648,17 @@ def recursive_security_scan(
         security_rules: Dict[str, Any],
         scan_context: Dict[str, Any] = None
 ) -> Dict[str, List[Dict]]:
-    """Рекурсивное сканирование файловой системы на предмет угроз безопасности."""
+    """
+    Recursively scan filesystem for security threats.
+    
+    Args:
+        root_path: Directory path to start scan from
+        security_rules: Dictionary containing security scanning rules
+        scan_context: Optional context dictionary for scanning
+    
+    Returns:
+        Dictionary containing categorized security findings
+    """
     if scan_context is None:
         scan_context = {}
 
@@ -703,7 +785,9 @@ def recursive_security_scan(
 
 
 def show_search_help():
-    """Отображение справочной информации по функциям поиска."""
+    """
+    Display help information for search functions.
+    """
     print(f"\n{ru.SEARCH_HELP_TITLE}")
     print("=" * 50)
     print(ru.SEARCH_PATTERNS)
